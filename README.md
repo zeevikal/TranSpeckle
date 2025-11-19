@@ -4,6 +4,25 @@ This repository contains the implementation of transformer-based architectures f
 ## Overview
 This study evaluates whether Transformer-based models can provide measurable advantages over conventional CNN frameworks for speckle pattern analysis in reconstruction tasks. We compare four transformer architectures against a CNN baseline (U-Net with Dense blocks), demonstrating that TransUNet with Rotary Position Embeddings (RoPE) achieves superior performance in most experimental conditions.
 
+## Framework
+
+### PyTorch Lightning
+- Structured training/validation loops
+- Automatic GPU handling and distributed training support
+- Built-in callbacks: ModelCheckpoint, EarlyStopping, LearningRateMonitor
+- Reproducible experiments with deterministic seed control
+
+### Optuna
+- Automated hyperparameter optimization
+- TPE (Tree-structured Parzen Estimator) sampler for efficient search
+- SQLite persistence for resumable studies
+- Best checkpoint selection based on validation IoU
+
+All models inherit from `pl.LightningModule` and implement:
+- `training_step()` - loss computation with IoU tracking
+- `validation_step()` - metric logging and early stopping criteria
+- `configure_optimizers()` - AdamW optimizer with ReduceLROnPlateau scheduler
+
 ## Models
 
 ### CNN Baseline
@@ -56,6 +75,32 @@ Place your data in Google Drive following this structure:
 │   └── group4_2/       # Test(28 samples): unseen objects, unseen diffuser
 ├── cache/              # Preprocessed data cache
 └── optuna_logs/        # Training logs and checkpoints
+```
+
+## Installation
+
+### Google Colab (Recommended)
+
+This project is optimized for Google Colab with NVIDIA A100 GPU.
+```python
+# Mount Google Drive
+from google.colab import drive
+drive.mount('/content/drive')
+
+# Clone repository
+!git clone https://github.com/your-username/TranSpeckle.git
+%cd TranSpeckle
+
+# Install dependencies
+!pip install -r requirements.txt
+
+# Clone TransUNet (required for TransUNet models)
+!git clone https://github.com/Beckschen/TransUNet.git
+
+# Add to path
+import sys
+sys.path.append('/content/TranSpeckle')
+sys.path.append('/content/TransUNet')
 ```
 
 ## Usage
@@ -114,33 +159,42 @@ results = evaluate_model(
 
 
 ## Project Structure
+## Project Structure
 ```
 TranSpeckle/
 ├── README.md
 ├── requirements.txt
-├── data/
-│   └── preprocessing.py          # Data loading and preprocessing
+├── .gitignore
+│
+├── modules/
+│   ├── preprocessing.py          # Data loading, preprocessing, caching
+│   ├── augmentation.py           # Speckle-specific augmentation transforms
+│   ├── datamodule.py             # PyTorch Lightning DataModule
+│   ├── orientation_pe.py         # Orientation-aware positional embeddings
+│   └── metrics.py                # IoU and PCC evaluation metrics
+│
 ├── models/
-│   ├── cnn_baseline.py          # CNN U-Net with Dense blocks
-│   ├── simple_vit.py            # SimpleViT architectures
-│   ├── transunet.py             # TransUNet and TransUNet+RoPE
-│   └── modules/
-│       ├── orientation_pe.py    # Orientation positional embedding
-│       ├── augmentation.py      # Data augmentation
-│       └── metrics.py           # Evaluation metrics
+│   ├── simple_vit_linear/
+│   │   └── model.py              # SimpleViT + linear decoder + Optuna objective
+│   │
+│   ├── simple_vit_attention/
+│   │   └── model.py              # SimpleViT + attention decoder + Optuna objective
+│   │
+│   ├── transunet/
+│   │   └── model.py              # TransUNet + wrapper + Optuna objective
+│   │
+│   └── transunet_rope/
+│       └── model.py              # TransUNet + RoPE + wrapper + Optuna objective
+│
 ├── training/
-│   ├── train_cnn.py            # CNN training script
-│   ├── train_simple_vit.py     # SimpleViT training script
-│   ├── train_transunet.py      # TransUNet training script
-│   └── optuna_tuning.py        # Hyperparameter optimization
-├── evaluation/
-│   ├── evaluate.py             # Model evaluation
-│   └── visualize.py            # Results visualization
-└── notebooks/                   # Jupyter notebooks for each model
-    ├── CNN_Baseline.ipynb
-    ├── SimpleViT.ipynb
-    ├── TransUNet.ipynb
-    └── TransUNet_RoPE.ipynb
+│   └── train.py                  # Generic training function (works for all models)
+│
+├── prediction/
+│   └── predict.py                # Generic prediction function (works for all models)
+│
+└── evaluation/
+    ├── evaluate.py               # Performance evaluation with IoU and PCC
+    └── visualize.py              # Results visualization
 ```
 
 

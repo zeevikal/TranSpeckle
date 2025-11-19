@@ -205,3 +205,54 @@ def load_cached_data(dataset_name: str, cache_dir: str = None):
     print(f" Loading cached data from: {cache_path}")
     data = torch.load(cache_path)
     return data['x_train'], data['y_train'], data['x_valid'], data['y_valid']
+
+
+def save_test_data(x_test, y_test, test_group: str, cache_dir: str = None):
+    """
+    Save preprocessed test data to cache for faster loading
+    
+    Args:
+        x_test, y_test: Preprocessed tensors
+        test_group: Test group name (e.g., "group1", "group2")
+        cache_dir: Cache directory (default: Google Drive cache)
+    
+    Returns:
+        Path to saved cache file
+    """
+    if cache_dir is None:
+        cache_dir = f"/content/drive/MyDrive/SpeckleML/cache/{test_group}"
+    
+    save_path = os.path.join(cache_dir, "processed.pt")
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+    torch.save({
+        'x_test': x_test,
+        'y_test': y_test
+    }, save_path)
+
+    print(f" Saved test set to: {save_path}")
+    return save_path
+
+
+def load_cached_test(test_group: str, cache_dir: str = None):
+    """
+    Load preprocessed test data from cache
+    
+    Args:
+        test_group: Test group name (e.g., "group1", "group2")
+        cache_dir: Cache directory (default: Google Drive cache)
+    
+    Returns:
+        x_test, y_test as torch tensors
+    """
+    if cache_dir is None:
+        cache_dir = f"/content/drive/MyDrive/SpeckleML/cache/{test_group}"
+    
+    cache_path = os.path.join(cache_dir, "processed.pt")
+    
+    if not os.path.exists(cache_path):
+        raise FileNotFoundError(f" No cached test data found at {cache_path}")
+    
+    print(f" Loading cached test data from: {cache_path}")
+    data = torch.load(cache_path)
+    return data['x_test'], data['y_test']

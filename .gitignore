@@ -205,3 +205,36 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# =============================================================================
+# TranSpeckle Project Specific
+# =============================================================================
+
+# PyTorch model files
+*.pt
+*.pth
+*.ckpt
+
+# Google Colab / Drive
+/content/
+drive/
+MyDrive/
+
+# Temporary checkpoints
+/temp_checkpoints/
+
+# Dataset files (too large for git)
+data/
+cache/
+datasets/
+*.tif
+*.tiff
+
+# Optuna hyperparameter optimization
+.optuna/
+optuna_logs/
+study.db
+
+# Project logs
+*.log

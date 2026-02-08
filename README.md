@@ -45,6 +45,20 @@ Each model is implemented in a dedicated notebook.
 - **TransUNet ViT-B/32 + RoPE**
 - **TransUNet R50-ViT-B/16 + RoPE**
 
+## Colab Notebooks
+
+Each model is provided as a standalone Google Colab notebook.
+Click on any notebook below to open and run it directly in Colab.
+
+| Order | Model | Notebook | Run |
+|------|------|----------|-----|
+| 01 | CNN U-Net (Baseline) | `01_CNN_U_Net.ipynb` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zeevikal/TranSpeckle/blob/main/notebooks/01_CNN_U_Net.ipynb) |
+| 02 | SimpleViT + Linear Decoder | `02_simpleViT_linear_decoder.ipynb` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zeevikal/TranSpeckle/blob/main/notebooks/02_simpleViT_linear_decoder.ipynb) |
+| 03 | SimpleViT + Attention Decoder | `03_simpleViT_attention_decoder.ipynb` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zeevikal/TranSpeckle/blob/main/notebooks/03_simpleViT_attention_decoder.ipynb) |
+| 04 | TransUNet ViT-B/32 | `04_TransUNet_B32.ipynb` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zeevikal/TranSpeckle/blob/main/notebooks/04_TransUNet_B32.ipynb) |
+| 05 | TransUNet ViT-B/32 + RoPE | `05_TransUNet_B32_with_RoPE.ipynb` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zeevikal/TranSpeckle/blob/main/notebooks/05_TransUNet_B32_with_RoPE.ipynb) |
+| 06 | TransUNet ResNet + RoPE | `06_TransUNet_RES_RoPE.ipynb` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zeevikal/TranSpeckle/blob/main/notebooks/06_TransUNet_RES_RoPE.ipynb) |
+
 
 ## Key Features
 

@@ -12,9 +12,19 @@ and provided with **read-only access**.
    to add the folder to your own Google Drive.
 
 3. Ensure the folder is located at:
-   /content/drive/MyDrive/TranSpeckle/
-
+  ```/content/drive/MyDrive/TranSpeckle/```
+   
 4. Open any Colab notebook from this repository and run all cells.
-The notebooks assume this directory structure by default.
+
+All notebooks assume this directory structure by default.
+
+### Folder Structure
+   ```
+   TranSpeckle/
+   ├── data_sets/ # Training and test datasets
+   ├── cache/ # Preprocessed data cache
+   ├── CNNuNET_checkpoints/ # Pretrained CNN U-Net models
+   └── optuna_logs/ # Optuna studies and training logs
+```
 
 

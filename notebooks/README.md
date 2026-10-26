@@ -39,3 +39,9 @@ in the main repository README and execute all cells.
 
 By default, notebooks load pretrained models and run evaluation.
 Training from scratch can be enabled by uncommenting the relevant cells.
+
+### Ablation Studies
+
+The `Ablations/` folder contains the positional-encoding ablations (OPE and RoPE) for the transformer models (02–06).
+Each ablation notebook trains its variants from scratch; no pretrained weights are provided.
+See [`Ablations/README.md`](Ablations/README.md) for the list of notebooks, the variants, and how to run them.
